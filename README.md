@@ -1,6 +1,8 @@
 # mongoose-meteor-account
 Meteor account system implemented in Mongoose
 
+[![Circle CI](https://circleci.com/gh/bookmd/mongoose-meteor-account.svg?style=shield)](https://circleci.com/gh/bookmd/mongoose-meteor-account)
+
 Implement of the Meteor account system for Mongoose
 
 <b>Usage</b>:
