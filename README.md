@@ -1,7 +1,10 @@
 # mongoose-meteor-account
 Meteor account system implemented in Mongoose
 
-Implement of the Meteor account system for Mongoose
+[![Circle CI](https://circleci.com/gh/bookmd/mongoose-meteor-account.svg?style=shield)](https://circleci.com/gh/bookmd/mongoose-meteor-account)
+
+Implement of the Meteor account system for Mongoose.<br />
+Now you can build new application with the same DB as your Meteor application, and authenticate with the same users!
 
 <b>Usage</b>:
 ```js
