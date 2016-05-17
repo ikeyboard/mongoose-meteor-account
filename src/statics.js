@@ -11,7 +11,7 @@ export default {
    * @returns {Promise.<T>}
    */
   login(username, password) {
-    return this.findOne({username: username}).exec()
+    return this.findOne({username: username}).select('services.password.bcrypt').exec()
     .then((user) => {
       if (!!user) {
         return user.comparePassword(password)
