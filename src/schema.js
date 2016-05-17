@@ -9,7 +9,7 @@ export default {
     },
     services: {
       password: {
-        bcrypt: String
+        bcrypt: { type: String, select: false },
       },
     },
     "emails": {
