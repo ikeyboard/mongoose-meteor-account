@@ -1,7 +1,6 @@
 /**
  * Created by rom on 18/04/2016.
  */
-import jwt from 'jsonwebtoken';
 import Password from './password';
 
 export default {

@@ -28,7 +28,6 @@
   "dependencies": {
     "bcrypt": "^0.8.5",
     "bluebird": "^3.3.5",
-    "jsonwebtoken": "^5.7.0",
     "lodash": "^4.11.1",
     "mongoose": "^4.4.12"
   },

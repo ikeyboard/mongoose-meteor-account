@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import _ from 'lodash';
 import Promise from 'bluebird';
 Promise.promisifyAll(bcrypt);
 
