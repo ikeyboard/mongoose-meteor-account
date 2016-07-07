@@ -3,7 +3,6 @@
  */
 
 export default {
-    _id: String,
     username: {
       type: String,
       required: true,
