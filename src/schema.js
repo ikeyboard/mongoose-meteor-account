@@ -10,6 +10,10 @@ export default {
     services: {
       password: {
         bcrypt: { type: String, select: false },
+        reset: {
+          token: String,
+          when: Date,
+        }
       },
     },
     "emails": {

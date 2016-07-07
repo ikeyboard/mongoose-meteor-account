@@ -3,5 +3,7 @@
  */
 
 import UserPlugin from './user';
+import * as Errors from './errors';
 
-module.exports = UserPlugin;
+export { Errors };
+export default UserPlugin;
