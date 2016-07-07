@@ -36,6 +36,9 @@ export default mongoose.model('User', UserSchema);
 <b>Methods</b>:
 - user.changePassword(password) - Change the password
 - user.comparePassword(password) - Compare given plain password to the password in the DB 
+- user.generateResetPasswordToken() - Generates a token for reset password process
+- user.verifyResetToken(token) - Checks if the provided token is equal to the generated one
+- user.resetPassword(token, password) - Changes the user's password if the token matches the generated one
 
 >
 </i>
@@ -46,7 +49,6 @@ the password can be a plain string of the password, or an object of hashed (sha2
 <b>Todo</b>:
 - Add `create new User (register)`
 - Add `remove user`
-- Add `forget my password and reset password`
 - Add `verify an email`
 - Add `Add new email`
 - Add `Set email as primary`
