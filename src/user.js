@@ -35,6 +35,17 @@ export default function UserPlugin(schema, options) {
     return this.services.password.bcrypt;
   });
 
+  schema.virtual('resetToken').set(function(token) {
+    this.services.password.reset = {
+      token,
+      when: new Date()
+    };
+  });
+
+  schema.virtual('resetToken').get(function() {
+    return _.get(this.services.password, 'reset.token');
+  });
+
   /**
    * Add Virtual fot email (only get!)
    * user.emails[primary].address -> user.email

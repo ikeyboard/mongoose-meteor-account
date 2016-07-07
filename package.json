@@ -30,6 +30,7 @@
   "dependencies": {
     "bcrypt": "^0.8.5",
     "bluebird": "^3.3.5",
+    "chance": "^1.0.3",
     "lodash": "^4.11.1",
     "mongoose": "^4.4.12"
   },
