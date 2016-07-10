@@ -3,3 +3,4 @@
  */
 
 export const INVALID_RESET_TOKEN = new Error('Invalid reset token');
+export const INVALID_VERIFICATION_TOKEN = new Error('Invalid verification token');

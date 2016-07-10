@@ -48,11 +48,29 @@ export default function UserPlugin(schema, options) {
 
   /**
    * Add Virtual fot email (only get!)
-   * user.emails[primary].address -> user.email
    */
   schema.virtual('email').get(function () {
-    const email = _.find(this.emails, {primary: true});
-    return email ? email.address : undefined;
+    return _.get(this.emails, '[0].address');
+  });
+
+  schema.virtual('verificationToken').set(function(token) {
+    _.set(this.services, 'email.verificationTokens[0]', {
+      token,
+      address: this.email,
+      when: new Date()
+    });
+  });
+
+  schema.virtual('verificationToken').get(function () {
+    return _.get(this.services, 'email.verificationTokens[0].token');
+  });
+
+  schema.virtual('isVerified').set(function(isVerified) {
+    _.set(this.emails, '[0].verified', isVerified);
+  });
+
+  schema.virtual('isVerified').get(function () {
+    return _.get(this.emails, '[0].verified');
   });
 
   /**

@@ -11,9 +11,10 @@ export default {
    * @returns {Promise.<T>}
    */
   login(username, password) {
-    return this.findOne({username: username}).select('services.password.bcrypt').exec()
+    // Selecting password and emails (for getting the isVerified virtual)
+    return this.findOne({username: username}).select('services.password.bcrypt emails').execAsync()
     .then((user) => {
-      if (!!user) {
+      if (!!user && user.isVerified === true) {
         return user.comparePassword(password)
         .then((res) => {
           if (res) return user;

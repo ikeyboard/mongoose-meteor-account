@@ -31,14 +31,17 @@ export default mongoose.model('User', UserSchema);
 ```
 
 <b>Statics</b>:
-- User.login(username, password) - Return Promise of the user if success, false if not
+- User.login(username, password) - Return Promise of the user if success, false if not. The user must be verified in order to login.
 
 <b>Methods</b>:
 - user.changePassword(password) - Change the password
-- user.comparePassword(password) - Compare given plain password to the password in the DB 
+- user.comparePassword(password) - Compare given plain password to the password in the DB
 - user.generateResetPasswordToken() - Generates a token for reset password process
-- user.verifyResetToken(token) - Checks if the provided token is equal to the generated one
-- user.resetPassword(token, password) - Changes the user's password if the token matches the generated one
+- user.verifyResetToken(token) - Checks if the provided token is equal to the generated reset token
+- user.resetPassword(token, password) - Changes the user's password if the token matches the generated one. Deletes the token afterwards
+- user.generateVerificationToken() - Generates a token for verification (usually being sent via email)
+- user.verifyVerificationToken(token) - Checks if the provided token is equal to the generated verification token
+- user.verifyUser(token) - Verifies the user by the provided token. Deletes the token afterwards
 
 >
 </i>
@@ -49,6 +52,5 @@ the password can be a plain string of the password, or an object of hashed (sha2
 <b>Todo</b>:
 - Add `create new User (register)`
 - Add `remove user`
-- Add `verify an email`
 - Add `Add new email`
 - Add `Set email as primary`
