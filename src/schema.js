@@ -15,6 +15,15 @@ export default {
           when: Date,
         }
       },
+      email: {
+        verificationTokens: {
+          type: [{
+            token: String,
+            address: String,
+            when: Date,
+          }]
+        }
+      },
     },
     "emails": {
       type: [{
@@ -26,12 +35,7 @@ export default {
           type: Boolean,
           required: true,
           default: false,
-        },
-        primary: {
-          type: Boolean,
-          required: true,
-          default: false,
-        },
+        }
       }]
     },
     profile: {
