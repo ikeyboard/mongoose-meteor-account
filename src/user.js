@@ -5,10 +5,10 @@
 import _ from 'lodash';
 import mongoose from 'mongoose';
 
-
 import UserSchema from './schema';
 import UserMethods from './methods';
 import UserStatics from './statics';
+import defaultConfig from './defaultConfig';
 
 /**
  * User plugin for mongoose
@@ -16,7 +16,7 @@ import UserStatics from './statics';
  * @param options
  * @constructor
  */
-export default function UserPlugin(schema, options) {
+export default function UserPlugin(schema, options = defaultConfig) {
   /**
    * Atach the schema
    */
@@ -81,9 +81,5 @@ export default function UserPlugin(schema, options) {
   /**
    * Add the statics
    */
-  schema.statics = _.extend(schema.statics, UserStatics);
-};
-
-
-
-
+  schema.statics = _.extend(schema.statics, UserStatics(options));
+}

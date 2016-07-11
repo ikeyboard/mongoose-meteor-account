@@ -50,7 +50,7 @@ export default {
   verifyResetToken(token) {
     return new Promise((resolve, reject) => {
       if (this.resetToken === token) {
-        resolve();
+        resolve(true);
       } else {
         reject(INVALID_RESET_TOKEN);
       }
@@ -94,7 +94,7 @@ export default {
   verifyVerificationToken(token) {
     return new Promise((resolve, reject) => {
       if (this.verificationToken === token) {
-        resolve();
+        resolve(true);
       } else {
         reject(INVALID_VERIFICATION_TOKEN);
       }
