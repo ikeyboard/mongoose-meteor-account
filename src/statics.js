@@ -15,12 +15,12 @@ export default function (config) {
       // Selecting password and emails (for getting the isVerified virtual)
       return this.findOne({username: username}).select('services.password.bcrypt emails').execAsync()
         .then((user) => {
-          // Enforcing user verification only if configured
-          const verificationCheck = config.verifiedLogin === true ? user.isVerified === true : true;
-          if (!!user && verificationCheck) {
+          if (!!user) {
             return user.comparePassword(password)
               .then((res) => {
-                if (res) return user;
+                // Enforcing user verification only if configured
+                const verificationCheck = config.verifiedLogin === true ? user.isVerified === true : true;
+                if (res && verificationCheck) return user;
                 return false;
               })
           }
