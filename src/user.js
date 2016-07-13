@@ -36,10 +36,14 @@ export default function UserPlugin(schema, options = defaultConfig) {
   });
 
   schema.virtual('resetToken').set(function(token) {
-    this.services.password.reset = {
-      token,
-      when: new Date()
-    };
+    if (token === '') {
+      this.services.password.reset = undefined;
+    } else {
+      this.services.password.reset = {
+        token,
+        when: new Date()
+      };
+    }
   });
 
   schema.virtual('resetToken').get(function() {
@@ -54,11 +58,15 @@ export default function UserPlugin(schema, options = defaultConfig) {
   });
 
   schema.virtual('verificationToken').set(function(token) {
-    _.set(this.services, 'email.verificationTokens[0]', {
-      token,
-      address: this.email,
-      when: new Date()
-    });
+    if (token === '') {
+      _.set(this.services, 'email.verificationTokens', []);
+    } else {
+      _.set(this.services, 'email.verificationTokens[0]', {
+        token,
+        address: this.email,
+        when: new Date()
+      });
+    }
   });
 
   schema.virtual('verificationToken').get(function () {
