@@ -1,6 +1,6 @@
 {
   "name": "mongoose-meteor-account",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Meteor account system implemented in Mongoose",
   "main": "dist/index.js",
   "scripts": {
@@ -31,8 +31,11 @@
     "bcrypt": "^0.8.5",
     "bluebird": "^3.3.5",
     "chance": "^1.0.3",
+    "es6-error": "^3.0.1",
     "lodash": "^4.11.1",
-    "mongoose": "^4.4.12"
+    "moment": "^2.14.1",
+    "mongoose": "^4.4.12",
+    "zxcvbn": "^4.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",

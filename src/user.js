@@ -16,7 +16,10 @@ import defaultConfig from './defaultConfig';
  * @param options
  * @constructor
  */
-export default function UserPlugin(schema, options = defaultConfig) {
+export default function UserPlugin(schema, options) {
+  // Set config
+  options = _.extend(defaultConfig, options);
+  
   /**
    * Atach the schema
    */
@@ -84,7 +87,7 @@ export default function UserPlugin(schema, options = defaultConfig) {
   /**
    * Add the methods
    */
-  schema.methods = _.extend(schema.methods, UserMethods);
+  schema.methods = _.extend(schema.methods, UserMethods(options));
 
   /**
    * Add the statics

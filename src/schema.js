@@ -13,7 +13,9 @@ export default {
         reset: {
           token: String,
           when: Date,
-        }
+        },
+        changeDate: Date,
+        oldPasswords: { type: [{ type: String, select: false }], default: [] },
       },
       email: {
         verificationTokens: {
