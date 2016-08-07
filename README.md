@@ -4,7 +4,8 @@ Meteor account system implemented in Mongoose
 [![Circle CI](https://circleci.com/gh/bookmd/mongoose-meteor-account.svg?style=shield)](https://circleci.com/gh/bookmd/mongoose-meteor-account)
 
 Implement of the Meteor account system for Mongoose.<br />
-Now you can build new application with the same DB as your Meteor application, and authenticate with the same users!
+Now you can build new application with the same DB as your Meteor application, and authenticate with the same users!<br />
+Support change password with strength validation using [zxcvbn](https://github.com/dropbox/zxcvbn).
 
 <b>Usage</b>:
 ```js
@@ -22,7 +23,12 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-UserSchema.plugin(UserPlugin);
+UserSchema.plugin(UserPlugin, {
+  verifiedLogin: true, // Make sure the user is verified (by email)
+  expirePasswordDays: 90, // When the password expired
+  oldPasswords: 5, // Don't let the user change his password to used one (save 5 password)
+  minPasswordStrength: 2, // zxcvbn minimum strength
+});
 
 /**
  * @typedef User
@@ -30,8 +36,14 @@ UserSchema.plugin(UserPlugin);
 export default mongoose.model('User', UserSchema);
 ```
 
+<b>Config</b>:
+- `verifiedLogin` - Check during the login if the email of the user is verified or not (default: false)
+- `expirePasswordDays` - After how many days the passwords of the user is expired, 0 is unlimited (default: 0)
+- `oldPasswords` - How many old password to save for avoid the usage of the same password twice, 0 is unlimited (default: 0)
+- `minPasswordStrength` - The minimum strength in `zxcvbn` rating for the password, 0 won't check (default: 0)
+
 <b>Statics</b>:
-- User.login(username, password) - Return Promise of the user if success, false if not. The user must be verified in order to login.
+- User.login(username, password, throwError = false) - Return Promise of the user if success, false if not. The user must be verified in order to login. If throwError is `true`, the login will throw an error with the reason if the login failed.
 
 <b>Methods</b>:
 - user.changePassword(password) - Change the password
