@@ -40,7 +40,7 @@ export default function (config) {
      */
     _strengthCheck(password) {
       const strength = zxcvbn(password);
-      return strength.score > (parseInt(config.minPasswordStrength) || 0);
+      return strength.score >= (parseInt(config.minPasswordStrength) || 0);
     },
 
     /**
