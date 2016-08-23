@@ -18,7 +18,8 @@ export default function (config) {
      * @returns {*}
      */
     comparePassword(password) {
-      return Password.comparePassword(password, this.password);
+      return this._getCurrentPassword()
+        .then(curr => Password.comparePassword(password, curr));
     },
 
     /**
