@@ -32,6 +32,7 @@ export default function UserPlugin(schema, options) {
    */
   schema.virtual('password').set(function (password) {
     this.services.password.bcrypt = password;
+    this.services.password.changeDate = new Date();
   });
 
   schema.virtual('password').get(function () {
