@@ -116,7 +116,6 @@ export default function (config) {
             this.services.password.oldPasswords = oldPasswords;
           }
           this.password = obj.hashedPassword;
-          this.services.password.changeDate = new Date();
           return this.save();
         });
     },
