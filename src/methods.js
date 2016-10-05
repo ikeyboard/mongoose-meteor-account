@@ -205,6 +205,24 @@ export default function (config) {
           this.verificationToken = "";
           return this.save();
         });
+    },
+
+    /**
+     * Locks the user from logging in
+     * @returns {*}
+     */
+    lock() {
+      this.isLocked = true;
+      return this.save();
+    },
+
+    /**
+     * Unlocks the user
+     * @returns {*}
+     */
+    unlock() {
+      this.isLocked = false;
+      return this.save();
     }
   }
 };

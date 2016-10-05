@@ -18,7 +18,8 @@ export default function (config) {
      */
     login(username, password, throwError = false) {
       // Selecting password and emails (for getting the isVerified virtual)
-      const SELECT_FIELDS = 'services.password.bcrypt services.password.changeDate emails';
+      const SELECT_FIELDS = 'services.password.bcrypt services.password.changeDate emails ' +
+        'services.lockout';
       return this.findOne({username: username}).select(SELECT_FIELDS).execAsync()
         .then((user) => {
           if (!!user) {
@@ -29,7 +30,13 @@ export default function (config) {
                   if (!!throwError) throw Errors.LOGIN_FAILED;
                   return false;
                 }
-                
+
+                // Check if locked
+                if (user.isLocked) {
+                  if (!!throwError) throw Errors.ACCOUNT_LOCKED;
+                  return false;
+                }
+
                 // Enforcing user verification only if configured
                 if (config.verifiedLogin === true && !user.isVerified) {
                   if (!!throwError) throw Errors.LOGIN_FAILED_UNVERIFIED;
