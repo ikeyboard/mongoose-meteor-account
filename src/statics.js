@@ -27,19 +27,19 @@ export default function (config) {
               .then((res) => {
                 // Check password
                 if (!res) {
-                  if (!!throwError) throw Errors.LOGIN_FAILED;
+                  if (!!throwError) throw new Errors.LOGIN_FAILED();
                   return false;
                 }
 
                 // Check if locked
-                if (user.isLocked) {
-                  if (!!throwError) throw Errors.ACCOUNT_LOCKED;
+                if (!!user.locked) {
+                  if (!!throwError) throw new Errors.ACCOUNT_LOCKED();
                   return false;
                 }
 
                 // Enforcing user verification only if configured
                 if (config.verifiedLogin === true && !user.isVerified) {
-                  if (!!throwError) throw Errors.LOGIN_FAILED_UNVERIFIED;
+                  if (!!throwError) throw new Errors.LOGIN_FAILED_UNVERIFIED();
                   return false;
                 }
                 
@@ -47,7 +47,7 @@ export default function (config) {
                 if (!!config.expirePasswordDays && config.expirePasswordDays > 0) {
                   const expirationDate = moment().subtract(config.expirePasswordDays, 'd');
                   if (user.services.password.changeDate - expirationDate <= 0) {
-                    if (!!throwError) throw Errors.LOGIN_FAILED_PASSWORD_EXPIRED;
+                    if (!!throwError) throw new Errors.LOGIN_FAILED_PASSWORD_EXPIRED();
                     return false;
                   }
                 }
@@ -57,7 +57,7 @@ export default function (config) {
               })
           }
           else {
-            if (!!throwError) throw Errors.LOGIN_FAILED;
+            if (!!throwError) throw new Errors.LOGIN_FAILED();
             return false;
           }
         });
