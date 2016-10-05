@@ -99,7 +99,7 @@ export default function (config) {
       return this._changePasswordValidation(password)
         .then((validation) => {
           if (!validation) {
-            throw WEAK_PASSWORD;
+            throw new WEAK_PASSWORD();
           }
 
           return Promise.props({
@@ -142,7 +142,7 @@ export default function (config) {
         if (this.resetToken === token) {
           resolve(true);
         } else {
-          reject(INVALID_RESET_TOKEN);
+          reject(new INVALID_RESET_TOKEN());
         }
       });
     },
@@ -186,7 +186,7 @@ export default function (config) {
         if (this.verificationToken === token) {
           resolve(true);
         } else {
-          reject(INVALID_VERIFICATION_TOKEN);
+          reject(new INVALID_VERIFICATION_TOKEN());
         }
       });
     },
@@ -205,6 +205,24 @@ export default function (config) {
           this.verificationToken = "";
           return this.save();
         });
+    },
+
+    /**
+     * Locks the user from logging in
+     * @returns {*}
+     */
+    lock() {
+      this.locked = true;
+      return this.save();
+    },
+
+    /**
+     * Unlocks the user
+     * @returns {*}
+     */
+    unlock() {
+      this.locked = false;
+      return this.save();
     }
   }
 };

@@ -85,6 +85,14 @@ export default function UserPlugin(schema, options) {
     return _.get(this.emails, '[0].verified');
   });
 
+  schema.virtual('locked').set(function(isLocked) {
+    _.set(this.services, 'lockout.isLocked', isLocked);
+  });
+
+  schema.virtual('locked').get(function () {
+    return _.get(this.services, 'lockout.isLocked');
+  });
+
   /**
    * Add the methods
    */
