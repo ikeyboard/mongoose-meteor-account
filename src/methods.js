@@ -211,8 +211,11 @@ export default function (config) {
      * Locks the user from logging in
      * @returns {*}
      */
-    lock() {
+    lock(reason) {
       this.locked = true;
+      if (!!reason) {
+        this.lockReason = reason;
+      }
       return this.save();
     },
 
@@ -222,6 +225,7 @@ export default function (config) {
      */
     unlock() {
       this.locked = false;
+      this.lockReason = null;
       return this.save();
     }
   }

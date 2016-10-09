@@ -65,11 +65,11 @@ export default function UserPlugin(schema, options) {
     if (token === '') {
       _.set(this.services, 'email.verificationTokens', []);
     } else {
-      _.set(this.services, 'email.verificationTokens[0]', {
+      _.set(this.services, 'email.verificationTokens', [{
         token,
         address: this.email,
         when: new Date()
-      });
+      }]);
     }
   });
 
@@ -91,6 +91,14 @@ export default function UserPlugin(schema, options) {
 
   schema.virtual('locked').get(function () {
     return _.get(this.services, 'lockout.isLocked');
+  });
+
+  schema.virtual('lockReason').set(function(reason) {
+    _.set(this.services, 'lockout.reason', reason);
+  });
+
+  schema.virtual('lockReason').get(function() {
+    return _.get(this.services, 'lockout.reason');
   });
 
   /**

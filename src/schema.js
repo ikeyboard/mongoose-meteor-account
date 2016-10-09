@@ -19,6 +19,7 @@ export default {
       },
       lockout: {
         isLocked: { type: Boolean, default: false },
+        reason: String
       },
       email: {
         verificationTokens: {
