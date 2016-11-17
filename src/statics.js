@@ -5,8 +5,14 @@
 import moment from 'moment';
 import * as Errors from './errors';
 
+const SELECT_HIDDEN_FIELDS = '+services.password.bcrypt +services.password.oldPasswords';
+
 export default function (config) {
   return {
+    getFull(query) {
+      return this.findOne(query).select(SELECT_HIDDEN_FIELDS).execAsync();
+    },
+
     /**
      * Login
      * Return the user if success, false if not
@@ -18,9 +24,7 @@ export default function (config) {
      */
     login(username, password, throwError = false) {
       // Selecting password and emails (for getting the isVerified virtual)
-      const SELECT_FIELDS = 'services.password.bcrypt services.password.changeDate emails ' +
-        'services.lockout';
-      return this.findOne({username: username}).select(SELECT_FIELDS).execAsync()
+      return this.findOne({username: username}).select(SELECT_HIDDEN_FIELDS).execAsync()
         .then((user) => {
           if (!!user) {
             return user.comparePassword(password)

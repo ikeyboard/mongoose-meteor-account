@@ -15,7 +15,7 @@ export default {
           when: Date,
         },
         changeDate: Date,
-        oldPasswords: { type: [{ type: String, select: false }], default: [] },
+        oldPasswords: { type: [{ type: String }], select: false, default: [] },
       },
       lockout: {
         isLocked: { type: Boolean, default: false },

@@ -34,6 +34,17 @@ export default function (config) {
     },
 
     /**
+     * Returns an array of the user's old passwords - hashed
+     * We need it because we don't select the old password array when we query a user
+     * @returns {Promise}
+     * @private
+     */
+    _getOldPasswords() {
+      return this.collection.findOne({ _id: this._id }, { 'services.password.oldPasswords': 1 })
+        .then(user => user.services.password.oldPasswords || []);
+    },
+
+    /**
      * Check for password strength using zxcvbn
      * @param password
      * @returns {boolean}
@@ -56,19 +67,20 @@ export default function (config) {
         return Promise.resolve(true);
       }
 
-      // Calculate the slice number, minus 1 for the current password
-      const oldPasswordSlice = -1 * (parseInt(config.oldPasswords) - 1); // 5 -> -4
-      // Slice the list and get only the last passwords
-      const oldPasswords = this.services.password.oldPasswords.slice(oldPasswordSlice);
-
       // Get the current password from the DB
-      return this._getCurrentPassword()
-        .then((currentPassword) => {
-          // Add the password to the old password list
-          oldPasswords.push(currentPassword);
+      return Promise.props({
+        currPassword: this._getCurrentPassword(),
+        oldPasswords: this._getOldPasswords(),
+      }).then(({ currPassword, oldPasswords }) => {
+        // Calculate the slice number, minus 1 for the current password
+        const oldPasswordSlice = -1 * (parseInt(config.oldPasswords) - 1); // 5 -> -4
+        // Slice the list and get only the last passwords
+        oldPasswords.slice(oldPasswordSlice);
+        // Add the password to the old password list
+        oldPasswords.push(currPassword);
 
-          return oldPasswords;
-        })
+        return oldPasswords;
+      })
         // Check for each password it match the new password
         .map(oldPassword => Password.comparePassword(password, oldPassword))
         // If there is true (match), it means that the new password already used
@@ -104,14 +116,15 @@ export default function (config) {
 
           return Promise.props({
             hashedPassword: Password.hashPassword(password),
-            oldPassword: this._getCurrentPassword(),
+            currPassword: this._getCurrentPassword(),
+            oldPasswords: this._getOldPasswords(),
           });
         })
         .then((obj) => {
           // Push old password to an array
           if (!!parseInt(config.oldPasswords)) {
-            let oldPasswords = this.services.password.oldPasswords;
-            oldPasswords.push(obj.oldPassword);
+            let oldPasswords = obj.oldPasswords;
+            oldPasswords.push(obj.currPassword);
             oldPasswords = _.takeRight(oldPasswords, parseInt(config.oldPasswords));
             this.services.password.oldPasswords = oldPasswords;
           }
