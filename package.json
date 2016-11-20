@@ -1,6 +1,6 @@
 {
   "name": "mongoose-meteor-account",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Meteor account system implemented in Mongoose",
   "main": "dist/index.js",
   "scripts": {
