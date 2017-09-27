@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register",
     "build": "babel src -d dist",
-    "prepublish": "npm run build"
+    "prepublish": "npm run snyk-protect; npm run build",
+    "snyk-protect": "snyk protect"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,8 @@
     "lodash": "^4.11.1",
     "moment": "^2.14.1",
     "mongoose": "^4.4.12",
-    "zxcvbn": "^4.3.0"
+    "zxcvbn": "^4.3.0",
+    "snyk": "^1.41.1"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
@@ -49,5 +51,6 @@
     "presets": [
       "es2015"
     ]
-  }
+  },
+  "snyk": true
 }
